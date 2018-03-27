@@ -1,0 +1,22 @@
+<mat-sidenav-container class="sidenav-container" [class.dark-theme]="isDarkTheme" [dir]="themeDirection">
+  <mat-sidenav class="sidenav mat-elevation-z15" #sidenav [mode]="isSmallScreen() ? 'over' : 'side'" [opened]="!isSmallScreen()">
+    <mat-toolbar color="primary">Contacts</mat-toolbar>
+    <mat-nav-list>
+        <mat-list-item *ngFor="let user of users | async">
+           <a matLine [routerLink]="['/contactmanager', user.id]" (click)="isSmallScreen() && sidenav.close()">
+              <mat-icon svgIcon= "{{ user.avatar }}"></mat-icon>
+             {{ user.name }}</a>
+        </mat-list-item>
+      </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenav-content">
+    <app-toolbar (toggleSidenav)="sidenav.toggle()"
+       (toggleTheme)="toggleTheme()"
+       (toggleDir)="toggleDir()">
+    </app-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
